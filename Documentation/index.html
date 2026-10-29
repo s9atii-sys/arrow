@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arrow Challenge — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #dce1f5;
+      --surface: #ffffff;
+      --sidebar: #2d3561;
+      --sidebar-hover: #3d4678;
+      --sidebar-active: #8b3dff;
+      --text: #2d3561;
+      --text-muted: #6b7280;
+      --purple: #8b3dff;
+      --purple-light: #a855f7;
+      --border: #e4e8f7;
+      --code-bg: #f3f4fb;
+      --shadow: 0 8px 32px rgba(45, 53, 97, 0.12);
+      --radius: 16px;
+      --sidebar-width: 280px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 32px; }
+
+    body {
+      font-family: 'Fredoka', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* Decorative blobs */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before {
+      width: 320px; height: 320px;
+      background: #f6e3a1;
+      top: -80px; right: 10%;
+    }
+    body::after {
+      width: 360px; height: 360px;
+      background: #e2cdf3;
+      bottom: -100px; left: 40%;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(180deg, #2d3561 0%, #1e2447 100%);
+      color: #fff;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+      z-index: 100;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+    }
+
+    .sidebar-header {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, #8b3dff, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 12px rgba(139,61,255,0.4);
+    }
+
+    .logo-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-sub {
+      font-size: 0.78rem;
+      opacity: 0.55;
+      padding-left: 52px;
+    }
+
+    .nav { padding: 16px 12px 32px; }
+
+    .nav-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.45;
+      padding: 12px 12px 8px;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      margin-bottom: 2px;
+    }
+
+    .nav a:hover {
+      background: var(--sidebar-hover);
+      color: #fff;
+    }
+
+    .nav a.active {
+      background: linear-gradient(90deg, var(--sidebar-active), #7c3aed);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(139,61,255,0.35);
+    }
+
+    .nav a::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 9px;
+      border: solid #ffffff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+
+    .nav a.active::before {
+      opacity: 1;
+    }
+
+    /* Main content */
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 40px 48px 80px;
+      max-width: 920px;
+    }
+
+    .hero {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 40px 44px;
+      box-shadow: var(--shadow);
+      margin-bottom: 32px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(139,61,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #2d3561, #8b3dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 600px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .badge-purple { background: #ede9fe; color: #5b21b6; }
+    .badge-green  { background: #dcfce7; color: #166534; }
+    .badge-blue   { background: #dbeafe; color: #1e40af; }
+
+    section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    section h2 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    section h2 .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #8b3dff, #a855f7);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    .notice-box {
+      background: linear-gradient(135deg, #fff8f0 0%, #fff3e6 100%);
+      border: 1px solid #fcd9b6;
+      border-left: 4px solid #f59e0b;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin: 16px 0 8px;
+    }
+
+    .notice-box strong {
+      color: #92400e;
+    }
+
+    .notice-box ul {
+      margin: 12px 0 0 18px;
+    }
+
+    .notice-box li {
+      color: #78350f;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 24px 0 10px;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 14px; }
+
+    ul, ol {
+      margin: 0 0 16px 20px;
+    }
+
+    li { margin-bottom: 8px; }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      background: var(--code-bg);
+      padding: 2px 7px;
+      border-radius: 6px;
+      color: #5b21b6;
+    }
+
+    pre {
+      background: #1e2447;
+      color: #e2e8f0;
+      padding: 18px 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    .comment { color: #94a3b8; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #f8f9fd;
+      font-weight: 600;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* Color swatches */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .color-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .color-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(45,53,97,0.1);
+    }
+
+    .color-swatch {
+      height: 72px;
+    }
+
+    .color-info {
+      padding: 12px 14px;
+      background: #fafbff;
+    }
+
+    .color-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+
+    .color-hex {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .color-group-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin: 28px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    /* Info cards */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .info-card {
+      background: linear-gradient(135deg, #f8f9fd, #eef0fb);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .info-card .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .info-card .value {
+      font-size: 1rem;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    /* FAQ */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      padding: 16px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafbff;
+      transition: background 0.2s;
+      user-select: none;
+    }
+
+    .faq-q:hover { background: #f0f2fc; }
+
+    .faq-q .arrow {
+      transition: transform 0.25s;
+      color: var(--purple);
+      font-size: 0.8rem;
+    }
+
+    .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+
+    .faq-a {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      color: var(--text-muted);
+      font-size: 0.93rem;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding: 0 20px 18px;
+    }
+
+    /* Changelog */
+    .changelog-entry {
+      border-left: 3px solid var(--purple);
+      padding: 0 0 24px 20px;
+      margin-left: 4px;
+      position: relative;
+    }
+
+    .changelog-entry::before {
+      content: '';
+      position: absolute;
+      left: -7px; top: 4px;
+      width: 11px; height: 11px;
+      background: var(--purple);
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--purple);
+    }
+
+    .changelog-entry:last-child { padding-bottom: 0; }
+
+    .changelog-version {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .changelog-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .changelog-entry ul {
+      margin-left: 16px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Feature list */
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      list-style: none;
+      margin: 16px 0 0;
+    }
+
+    .feature-list li {
+      background: #f8f9fd;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .feature-list li strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    /* Screenshots */
+    .screenshot-showcase {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 24px 0 32px;
+    }
+
+    .screenshot-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 22px;
+      margin: 20px 0 8px;
+    }
+
+    .screenshot-card {
+      text-align: center;
+    }
+
+    .screenshot-frame {
+      background: linear-gradient(145deg, #2d3561 0%, #1e2447 100%);
+      border-radius: 22px;
+      padding: 10px;
+      box-shadow: 0 10px 28px rgba(45, 53, 97, 0.18);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .screenshot-card:hover .screenshot-frame {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(139, 61, 255, 0.22);
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      display: block;
+      background: #fff;
+    }
+
+    .screenshot-caption {
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .screenshot-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .screenshot-showcase .screenshot-frame {
+      padding: 12px;
+      border-radius: 26px;
+    }
+
+    .screenshot-showcase .screenshot-caption {
+      font-size: 0.95rem;
+    }
+
+    /* Mobile toggle */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 16px; left: 16px;
+      z-index: 200;
+      background: var(--sidebar);
+      color: #fff;
+      border: none;
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    footer {
+      margin-left: var(--sidebar-width);
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 860px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; padding: 80px 20px 60px; }
+      footer { margin-left: 0; }
+      .menu-toggle { display: flex; align-items: center; justify-content: center; }
+      .hero { padding: 28px 24px; }
+      .hero h1 { font-size: 1.8rem; }
+      section { padding: 28px 22px; }
+      .screenshot-showcase { grid-template-columns: 1fr; }
+      .screenshot-gallery { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    }
+
+    @media (max-width: 520px) {
+      .screenshot-gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-badge">
+        <div class="logo-icon">➜</div>
+        <span class="logo-text">Arrow Challenge</span>
+      </div>
+      <div class="logo-sub">v1.0.0 · Documentation</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-label">Guide</div>
+      <a href="#notes" class="active">Notes</a>
+      <a href="#introduction">Introduction</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#installation">Installation</a>
+      <a href="#usages">Usages</a>
+      <div class="nav-label">App Info</div>
+      <a href="#app-colors">App Colors</a>
+      <a href="#app-name">App Name</a>
+      <a href="#package-name">Package Name</a>
+      <a href="#app-build">App Build</a>
+      <div class="nav-label">Reference</div>
+      <a href="#faq">FAQ</a>
+      <a href="#changelog">Changelog</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <h1>Arrow Challenge Docs</h1>
+      <p>Complete documentation for the Flutter puzzle game — setup, gameplay, branding, build instructions, and release notes.</p>
+      <div class="badges">
+        <span class="badge badge-purple">Flutter 3.x</span>
+        <span class="badge badge-green">420 Levels</span>
+        <span class="badge badge-blue">AdMob Ready</span>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <section id="notes">
+      <h2><span class="section-num">!</span> Notes</h2>
+      <p class="section-desc">Important information for buyers before setup and publishing.</p>
+
+      <div class="notice-box">
+        <p><strong>AdMob account responsibility:</strong> This package includes Google AdMob integration only. <strong>Buyers are solely responsible for creating, managing, and maintaining their own Google AdMob accounts</strong>, including any registration, verification, policy compliance, tax, payout, or other service-related requirements imposed by Google.</p>
+        <p><strong>Costs and third-party fees:</strong> Any costs, charges, revenue-sharing arrangements, or fees associated with AdMob or other third-party advertising services are the buyer's responsibility. The author of this item does not provide AdMob accounts, ad serving, or payment processing on behalf of buyers.</p>
+        <ul>
+          <li>The source package ships with <strong>Google test AdMob IDs</strong>. Replace them with your own production ad unit IDs before publishing.</li>
+          <li>You must register your app in the <a href="https://admob.google.com/" target="_blank" rel="noopener noreferrer">Google AdMob</a> console and create your own banner, interstitial, and rewarded ad units.</li>
+          <li>AdMob is a third-party service governed by Google's terms, policies, and eligibility requirements.</li>
+          <li>Replace debug signing with your own release keystore before uploading to Google Play.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section id="introduction">
+      <h2><span class="section-num">1</span> Introduction</h2>
+      <p class="section-desc">Overview of the game and its core mechanics.</p>
+
+      <p><strong>Arrow Challenge</strong> is a mobile puzzle game built with Flutter and Flame. Players tap winding arrow paths on a white game board and slide them off in the direction they point. The goal is to clear every arrow before the countdown timer reaches zero.</p>
+
+      <p>Each level is a dense maze of interlocking arrow snakes. Most arrows look movable but are blocked — you must discover the correct order to free them all. Wrong moves shake the board and cost hearts.</p>
+
+      <h3>Key Features</h3>
+      <ul class="feature-list">
+        <li><strong>420+ Levels</strong> Procedurally generated, always solvable puzzles.</li>
+        <li><strong>Timed Gameplay</strong> Countdown budget based on the arrow count — more arrows means more time, tightening per-arrow as levels advance.</li>
+        <li><strong>3 Hearts</strong> Lose a heart on every blocked move.</li>
+        <li><strong>Sound Effects</strong> Swipe sound on successful arrow exits.</li>
+        <li><strong>Progress Saving</strong> Unlocked levels and star ratings via SharedPreferences.</li>
+        <li><strong>Pastel UI</strong> Cartoon logo, wooden controls, chunky buttons.</li>
+        <li><strong>Google AdMob</strong> Banner, interstitial, and rewarded ads integrated.</li>
+      </ul>
+
+      <h3>Tech Stack</h3>
+      <table>
+        <thead><tr><th>Package</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>flame</code></td><td>Game board rendering &amp; animations</td></tr>
+          <tr><td><code>google_mobile_ads</code></td><td>AdMob monetization</td></tr>
+          <tr><td><code>audioplayers</code></td><td>Swipe sound effects</td></tr>
+          <tr><td><code>shared_preferences</code></td><td>Save progress &amp; stars</td></tr>
+          <tr><td><code>google_fonts</code></td><td>Fredoka &amp; Luckiest Guy typography</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SCREENSHOTS -->
+    <section id="screenshots">
+      <h2><span class="section-num">📷</span> Screenshots</h2>
+      <p class="section-desc">Preview the main game screens — splash, menu, level selection, gameplay, and dialogs.</p>
+
+      <h3>Featured Screens</h3>
+      <div class="screenshot-showcase">
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/menu.png" alt="Arrow Challenge main menu with Play and Levels buttons" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Main Menu</div>
+          <div class="screenshot-desc">Cartoon logo, PLAY and LEVELS buttons, pastel background</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/gameplay.png" alt="Arrow Challenge gameplay board with winding arrow snakes" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Gameplay</div>
+          <div class="screenshot-desc">Tap arrows to slide them off the board before time runs out</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/levels_play.png" alt="Arrow Challenge level selection grid" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Level Selection</div>
+          <div class="screenshot-desc">Grid of 420 levels with stars and unlock progression</div>
+        </div>
+      </div>
+
+      <h3>All Screens</h3>
+      <div class="screenshot-gallery">
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/splash.png" alt="Arrow Challenge splash screen with logo and loading bar" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Splash Screen</div>
+          <div class="screenshot-desc">Logo, random tip, animated loading bar</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/menu.png" alt="Arrow Challenge main menu" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Main Menu</div>
+          <div class="screenshot-desc">Play, Levels, and banner ad placement</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/levels_play.png" alt="Level select screen" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Level Select</div>
+          <div class="screenshot-desc">Choose any unlocked level from the grid</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/levels_unlocked.png" alt="Level select with unlocked levels" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Unlocked Levels</div>
+          <div class="screenshot-desc">Progress saved with star ratings per level</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/levels_palying.png" alt="Level select during gameplay session" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Level Grid</div>
+          <div class="screenshot-desc">Visual level map with locked and completed stages</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/gameplay.png" alt="In-game puzzle board" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">In-Game Board</div>
+          <div class="screenshot-desc">Hearts, timer, and winding arrow snakes</div>
+        </div>
+        <div class="screenshot-card">
+          <div class="screenshot-frame">
+            <img src="screenshot/times_up.png" alt="Time's Up dialog with Watch and Retry option" loading="lazy" />
+          </div>
+          <div class="screenshot-caption">Time's Up Dialog</div>
+          <div class="screenshot-desc">Rewarded ad retry and quit options</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALLATION -->
+    <section id="installation">
+      <h2><span class="section-num">2</span> Installation</h2>
+      <p class="section-desc">Set up your development environment and run the project.</p>
+
+      <h3>Requirements</h3>
+      <table>
+        <thead><tr><th>Tool</th><th>Version</th></tr></thead>
+        <tbody>
+          <tr><td>Flutter SDK</td><td>3.x or later</td></tr>
+          <tr><td>Dart SDK</td><td>^3.12.2</td></tr>
+          <tr><td>Android</td><td>API 21+ (physical device recommended for ads)</td></tr>
+          <tr><td>iOS</td><td>13.0+ (Mac + Xcode required for iOS builds)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Package layout</h3>
+      <p>The Flutter project sits <strong>directly</strong> in <code>Source-Code/</code>. There is no extra <code>app/</code> or duplicate project folder. After unzipping you should see:</p>
+      <pre><code>Arrow-Challenge/
+├── Documentation/          <span class="comment"># open index.html in a browser</span>
+└── Source-Code/            <span class="comment"># Flutter project root</span>
+    ├── pubspec.yaml
+    ├── lib/
+    ├── android/
+    ├── ios/
+    ├── assets/
+    └── docs/</code></pre>
+
+      <h3>Steps</h3>
+      <pre><code><span class="comment"># 1. Unzip the package and open the Flutter project</span>
+cd Source-Code
+
+<span class="comment"># 2. Install dependencies</span>
+flutter pub get
+
+<span class="comment"># 3. Verify Flutter setup</span>
+flutter doctor
+
+<span class="comment"># 4. List available devices</span>
+flutter devices
+
+<span class="comment"># 5. Run the app</span>
+flutter run
+
+<span class="comment"># 6. Run tests (optional)</span>
+dart analyze lib test
+flutter test</code></pre>
+
+      <h3>AdMob Setup (Before Release)</h3>
+      <p>The project ships with <strong>Google test ad unit IDs</strong>. Replace them before publishing:</p>
+      <ol>
+        <li>Edit ad unit IDs in <code>lib/services/ad_config.dart</code></li>
+        <li>Set Android App ID in <code>android/app/src/main/AndroidManifest.xml</code></li>
+        <li>Set iOS App ID in <code>ios/Runner/Info.plist</code> (<code>GADApplicationIdentifier</code>)</li>
+      </ol>
+    </section>
+
+    <!-- USAGES -->
+    <section id="usages">
+      <h2><span class="section-num">3</span> Usages</h2>
+      <p class="section-desc">How to play, customize, and use developer tools.</p>
+
+      <h3>How to Play</h3>
+      <ol>
+        <li><strong>Splash Screen</strong> — Wait for the loading bar and read the tip.</li>
+        <li><strong>Menu</strong> — Tap <strong>PLAY</strong> to continue or <strong>LEVELS</strong> to pick a level.</li>
+        <li><strong>Goal</strong> — Remove every arrow from the board before the timer hits <code>0:00</code>.</li>
+        <li><strong>Tap an arrow</strong> — If its exit path is clear, it slides off with a swipe sound.</li>
+        <li><strong>Blocked move</strong> — The board shakes, you lose a heart, and the arrow stays.</li>
+        <li><strong>Retry</strong> — Watch a rewarded ad via <strong>WATCH &amp; RETRY</strong> after Time's Up or Out of Hearts.</li>
+        <li><strong>Win</strong> — Clear the board in time to earn stars and unlock the next level.</li>
+      </ol>
+
+      <h3>Ad Placements</h3>
+      <table>
+        <thead><tr><th>Ad Type</th><th>Trigger</th><th>File</th></tr></thead>
+        <tbody>
+          <tr><td>Banner</td><td>Menu screen bottom</td><td><code>menu_screen.dart</code></td></tr>
+          <tr><td>Interstitial</td><td>Play button / level tile tap</td><td><code>menu_screen.dart</code>, <code>level_select_screen.dart</code></td></tr>
+          <tr><td>Rewarded</td><td>Watch &amp; Retry dialogs</td><td><code>game_screen.dart</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Developer Tools</h3>
+      <pre><code><span class="comment"># Verify all 420 levels are solvable</span>
+dart run tool/check_levels.dart
+
+<span class="comment"># Render a level as ASCII art (debug)</span>
+dart run tool/render_level.dart
+
+<span class="comment"># Regenerate app icons after replacing logo</span>
+dart run icons_launcher:create</code></pre>
+
+      <h3>Customization Quick Reference</h3>
+      <table>
+        <thead><tr><th>What</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td>Timer (scales with arrow count)</td><td><code>lib/models/level.dart</code> → <code>LevelTimeLimit</code></td></tr>
+          <tr><td>Level difficulty</td><td><code>lib/levels/puzzle_difficulty.dart</code></td></tr>
+          <tr><td>Hearts per level</td><td><code>lib/screens/game_screen.dart</code> → <code>_maxHearts</code></td></tr>
+          <tr><td>Splash tips</td><td><code>lib/screens/splash_screen.dart</code> → <code>_tips</code></td></tr>
+          <tr><td>Theme colors</td><td><code>lib/widgets/common_widgets.dart</code> → <code>AppTheme</code></td></tr>
+          <tr><td>Swipe sound</td><td><code>assets/audio/swipe.wav</code></td></tr>
+          <tr><td>App icon</td><td><code>assets/images/app_logo.png</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- APP COLORS -->
+    <section id="app-colors">
+      <h2><span class="section-num">4</span> App Colors</h2>
+      <p class="section-desc">Brand palette defined in <code>AppTheme</code> (<code>lib/widgets/common_widgets.dart</code>).</p>
+
+      <div class="color-group-title">Primary Palette</div>
+      <div class="color-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background:#DCE1F5"></div>
+          <div class="color-info"><div class="color-name">Background</div><div class="color-hex">#DCE1F5</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#2D3561"></div>
+          <div class="color-info"><div class="color-name">Navy (Text / Arrows)</div><div class="color-hex">#2D3561</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#8B3DFF"></div>
+          <div class="color-info"><div class="color-name">Purple (Primary)</div><div class="color-hex">#8B3DFF</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#A855F7"></div>
+          <div class="color-info"><div class="color-name">Purple Light</div><div class="color-hex">#A855F7</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#5B21B6"></div>
+          <div class="color-info"><div class="color-name">Purple Dark</div><div class="color-hex">#5B21B6</div></div>
+        </div>
+      </div>
+
+      <div class="color-group-title">Semantic Colors</div>
+      <div class="color-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background:#FF3B5C"></div>
+          <div class="color-info"><div class="color-name">Heart Red</div><div class="color-hex">#FF3B5C</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#FFC831"></div>
+          <div class="color-info"><div class="color-name">Warning / Stars</div><div class="color-hex">#FFC831</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#22C55E"></div>
+          <div class="color-info"><div class="color-name">Success</div><div class="color-hex">#22C55E</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#2196F3"></div>
+          <div class="color-info"><div class="color-name">Blue (Quit Button)</div><div class="color-hex">#2196F3</div></div>
+        </div>
+      </div>
+
+      <div class="color-group-title">White-Wood UI</div>
+      <div class="color-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background:#FFFFFF;border-bottom:1px solid #eee"></div>
+          <div class="color-info"><div class="color-name">White Wood Top</div><div class="color-hex">#FFFFFF</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#FAFAF8"></div>
+          <div class="color-info"><div class="color-name">White Wood High</div><div class="color-hex">#FAFAF8</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#F5F3F0"></div>
+          <div class="color-info"><div class="color-name">White Wood Mid</div><div class="color-hex">#F5F3F0</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#EEEAE6"></div>
+          <div class="color-info"><div class="color-name">White Wood Low</div><div class="color-hex">#EEEAE6</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#6B635A"></div>
+          <div class="color-info"><div class="color-name">Wood Ink</div><div class="color-hex">#6B635A</div></div>
+        </div>
+      </div>
+
+      <div class="color-group-title">Pastel Background Blobs</div>
+      <div class="color-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background:#F6E3A1"></div>
+          <div class="color-info"><div class="color-name">Yellow Blob</div><div class="color-hex">#F6E3A1</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#C9E6F7"></div>
+          <div class="color-info"><div class="color-name">Sky Blob</div><div class="color-hex">#C9E6F7</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#E2CDF3"></div>
+          <div class="color-info"><div class="color-name">Lavender Blob</div><div class="color-hex">#E2CDF3</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#C4D2F6"></div>
+          <div class="color-info"><div class="color-name">Blue Blob</div><div class="color-hex">#C4D2F6</div></div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background:#F3CDE8"></div>
+          <div class="color-info"><div class="color-name">Pink Blob</div><div class="color-hex">#F3CDE8</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP NAME -->
+    <section id="app-name">
+      <h2><span class="section-num">5</span> App Name</h2>
+      <p class="section-desc">Display name and branding used across platforms.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="label">Display Name</div>
+          <div class="value">Arrow Challenge</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Dart Package</div>
+          <div class="value">arrow_challenge</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Version</div>
+          <div class="value">1.0.0+1</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Fonts</div>
+          <div class="value">Fredoka, Luckiest Guy</div>
+        </div>
+      </div>
+
+      <h3>Where the Name Appears</h3>
+      <table>
+        <thead><tr><th>Platform / File</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Flutter <code>MaterialApp.title</code></td><td>Arrow Challenge</td></tr>
+          <tr><td>Android label</td><td>Arrow Challenge (<code>AndroidManifest.xml</code>)</td></tr>
+          <tr><td>iOS display name</td><td>Arrow Challenge (<code>Info.plist</code>)</td></tr>
+          <tr><td>Logo text</td><td>ARROW CHALLENGE (<code>CartoonLogoText</code> widget)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- PACKAGE NAME -->
+    <section id="package-name">
+      <h2><span class="section-num">6</span> Package Name</h2>
+      <p class="section-desc">Application identifiers for Android and iOS.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="label">Android Application ID</div>
+          <div class="value">com.arrowchallenge.game</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Android Namespace</div>
+          <div class="value">com.arrowchallenge.game</div>
+        </div>
+        <div class="info-card">
+          <div class="label">iOS Bundle ID</div>
+          <div class="value">com.arrowchallenge.game</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Dart Package</div>
+          <div class="value">arrow_challenge</div>
+        </div>
+      </div>
+
+      <h3>Change Package Name</h3>
+      <p>To rename the app identifier, use the included <code>change_app_package_name</code> package or update manually:</p>
+      <pre><code><span class="comment"># Using change_app_package_name</span>
+dart run change_app_package_name:main com.yourcompany.yourapp
+
+<span class="comment"># Manual files to update:</span>
+<span class="comment"># android/app/build.gradle.kts → applicationId &amp; namespace</span>
+<span class="comment"># ios/Runner.xcodeproj/project.pbxproj → PRODUCT_BUNDLE_IDENTIFIER</span>
+<span class="comment"># android/app/src/main/kotlin/... → move MainActivity package folder</span></code></pre>
+    </section>
+
+    <!-- APP BUILD -->
+    <section id="app-build">
+      <h2><span class="section-num">7</span> App Build</h2>
+      <p class="section-desc">Build configuration and release commands.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="label">Version Name</div>
+          <div class="value">1.0.0</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Version Code</div>
+          <div class="value">1</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Compile SDK</div>
+          <div class="value">36</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Target SDK</div>
+          <div class="value">36</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Java / Kotlin</div>
+          <div class="value">JVM 17</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Min SDK</div>
+          <div class="value">Flutter default (21+)</div>
+        </div>
+      </div>
+
+      <h3>Debug Build</h3>
+      <pre><code>flutter run
+flutter run --release   <span class="comment"># Recommended for ad testing</span></code></pre>
+
+      <h3>Release Builds</h3>
+      <pre><code><span class="comment"># Android APK (side-loading / testing)</span>
+flutter build apk --release
+
+<span class="comment"># Android App Bundle (Google Play Store)</span>
+flutter build appbundle --release
+
+<span class="comment"># iOS (requires Mac + Xcode + signing)</span>
+flutter build ios --release</code></pre>
+
+      <h3>Before Publishing Checklist</h3>
+      <ul>
+        <li>Replace AdMob test IDs with production IDs</li>
+        <li>Set up release signing (Android keystore, iOS certificates)</li>
+        <li>In Xcode, set <strong>Signing &amp; Capabilities → Team</strong> to your own Apple Development Team (<code>DEVELOPMENT_TEAM</code> in <code>ios/Runner.xcodeproj/project.pbxproj</code> ships empty)</li>
+        <li>Update <code>version</code> in <code>pubspec.yaml</code></li>
+        <li>Regenerate app icons if logo changed: <code>dart run icons_launcher:create</code></li>
+        <li>Test on physical devices (ads require real hardware)</li>
+        <li>Run <code>dart analyze lib test</code> and <code>flutter test</code></li>
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2><span class="section-num">8</span> FAQ</h2>
+      <p class="section-desc">Frequently asked questions about setup and gameplay.</p>
+
+      <div class="faq-item">
+        <div class="faq-q">Why don't ads show in the emulator?<span class="arrow">▼</span></div>
+        <div class="faq-a">AdMob ads require a physical Android or iOS device. They are disabled on web and desktop. Use <code>flutter run --release</code> on a real phone with test ad IDs during development.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How does the countdown timer work?<span class="arrow">▼</span></div>
+        <div class="faq-a">Level 1 starts with 20 seconds. Each level shaves time off linearly until the floor of 15 seconds at level 420. The timer turns red when 5 seconds or less remain.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I retry without watching an ad?<span class="arrow">▼</span></div>
+        <div class="faq-a">After Time's Up or Out of Hearts, retry requires watching a rewarded ad via the <strong>WATCH &amp; RETRY</strong> button. Closing the ad early does not grant a retry. You can always tap reload to restart the level from scratch (costs progress on that attempt).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Are all 420 levels guaranteed solvable?<span class="arrow">▼</span></div>
+        <div class="faq-a">Yes. The generator in <code>puzzle_generator.dart</code> only places an arrow when its exit path is clear, then <code>puzzle_validator.dart</code> confirms a full solve. Run <code>dart run tool/check_levels.dart</code> to verify all 420 levels independently.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How do I change the app icon?<span class="arrow">▼</span></div>
+        <div class="faq-a">Replace <code>assets/images/app_logo.png</code>, then run <code>dart run icons_launcher:create</code>. The <code>icons_launcher</code> config is in <code>pubspec.yaml</code>.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Where do I put my real AdMob IDs?<span class="arrow">▼</span></div>
+        <div class="faq-a">Update <code>lib/services/ad_config.dart</code> for ad unit IDs, <code>AndroidManifest.xml</code> for the Android App ID, and <code>ios/Runner/Info.plist</code> for the iOS App ID (<code>GADApplicationIdentifier</code>).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Why does the board shake on some taps?<span class="arrow">▼</span></div>
+        <div class="faq-a">A shake means the arrow's exit path is blocked by another snake or the board edge. You lose one heart. Find an arrow whose entire path to the edge is clear.</div>
+      </div>
+    </section>
+
+    <!-- CHANGELOG -->
+    <section id="changelog">
+      <h2><span class="section-num">9</span> Changelog</h2>
+      <p class="section-desc">Release history and notable changes.</p>
+
+      <div class="changelog-entry">
+        <div class="changelog-version">v1.0.0</div>
+        <div class="changelog-date">Initial Release · August 2025</div>
+        <ul>
+          <li>Launch with 420 procedurally generated solvable levels</li>
+          <li>Snake-based arrow puzzle mechanics with tap-to-slide gameplay</li>
+          <li>Countdown timer scaled to each level's arrow count, plus 3-heart system</li>
+          <li>Splash screen with random tips and animated progress bar</li>
+          <li>Pastel UI: cartoon logo, wooden controls, chunky buttons</li>
+          <li>Level select grid with star ratings and progress saving</li>
+          <li>Swipe sound effect on successful arrow exits</li>
+          <li>Google AdMob integration (banner, interstitial, rewarded)</li>
+          <li>Rewarded retry for Time's Up and Out of Hearts dialogs</li>
+          <li>Victory screen with stats and star rating</li>
+          <li>Developer tools: level solvability checker and ASCII renderer</li>
+          <li>App icon via icons_launcher, package name <code>com.arrowchallenge.game</code></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  Arrow Challenge Documentation · Built with Flutter · &copy; 2026
+</footer>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`.nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Mobile menu toggle
+  const toggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => sidebar.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>

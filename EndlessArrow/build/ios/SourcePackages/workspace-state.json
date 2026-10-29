@@ -1,0 +1,159 @@
+{
+  "object" : {
+    "artifacts" : [
+      {
+        "kind" : "xcframework",
+        "packageRef" : {
+          "identity" : "swift-package-manager-google-mobile-ads",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/googleads/swift-package-manager-google-mobile-ads",
+          "name" : "GoogleMobileAds"
+        },
+        "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/build/ios/SourcePackages/artifacts/swift-package-manager-google-mobile-ads/GoogleMobileAds/GoogleMobileAds.xcframework",
+        "source" : {
+          "checksum" : "cd356c1fe78f0b19abe9b0722affc128dfcaf9f863fd69c379cc47d46275d7bb",
+          "type" : "remote",
+          "url" : "https://dl.google.com/googleadmobadssdk/cd356c1fe78f0b19/googlemobileadsios-spm-13.9.0.zip"
+        },
+        "targetName" : "GoogleMobileAds"
+      },
+      {
+        "kind" : "xcframework",
+        "packageRef" : {
+          "identity" : "swift-package-manager-google-user-messaging-platform",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git",
+          "name" : "GoogleUserMessagingPlatform"
+        },
+        "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/build/ios/SourcePackages/artifacts/swift-package-manager-google-user-messaging-platform/UserMessagingPlatform/UserMessagingPlatform.xcframework",
+        "source" : {
+          "checksum" : "90fe6bf3b0f4ce0d0199628c0871de58b6f673375148b98d52348aecc86db231",
+          "type" : "remote",
+          "url" : "https://dl.google.com/googleadmobadssdk/90fe6bf3b0f4ce0d/googleusermessagingplatformios-spm-3.1.0.zip"
+        },
+        "targetName" : "UserMessagingPlatform"
+      }
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "audioplayers_darwin-6.5.0",
+          "kind" : "fileSystem",
+          "location" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/audioplayers_darwin-6.5.0",
+          "name" : "audioplayers_darwin"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/audioplayers_darwin-6.5.0"
+        },
+        "subpath" : "audioplayers_darwin-6.5.0"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "flutterframework",
+          "kind" : "fileSystem",
+          "location" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/FlutterFramework",
+          "name" : "FlutterFramework"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/FlutterFramework"
+        },
+        "subpath" : "flutterframework"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "google_mobile_ads-9.1.0",
+          "kind" : "fileSystem",
+          "location" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/google_mobile_ads-9.1.0",
+          "name" : "google_mobile_ads"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/google_mobile_ads-9.1.0"
+        },
+        "subpath" : "google_mobile_ads-9.1.0"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "shared_preferences_foundation-2.5.6",
+          "kind" : "fileSystem",
+          "location" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/shared_preferences_foundation-2.5.6",
+          "name" : "shared_preferences_foundation"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/shared_preferences_foundation-2.5.6"
+        },
+        "subpath" : "shared_preferences_foundation-2.5.6"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "swift-package-manager-google-mobile-ads",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/googleads/swift-package-manager-google-mobile-ads",
+          "name" : "GoogleMobileAds"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "54efe6d39a7b41b84c1041f21c704a7e6a493d7a",
+            "version" : "13.9.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "swift-package-manager-google-mobile-ads"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "swift-package-manager-google-user-messaging-platform",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git",
+          "name" : "GoogleUserMessagingPlatform"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "13b248eaa73b7826f0efb1bcf455e251d65ecb1b",
+            "version" : "3.1.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "swift-package-manager-google-user-messaging-platform"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "url_launcher_ios-6.4.2",
+          "kind" : "fileSystem",
+          "location" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/url_launcher_ios-6.4.2",
+          "name" : "url_launcher_ios"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/url_launcher_ios-6.4.2"
+        },
+        "subpath" : "url_launcher_ios-6.4.2"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "webview_flutter_wkwebview-3.26.0",
+          "kind" : "fileSystem",
+          "location" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/webview_flutter_wkwebview-3.26.0",
+          "name" : "webview_flutter_wkwebview"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/macbookpro/Desktop/Flutter codes/Arrow-Challenge/EndlessArrow/ios/Flutter/ephemeral/Packages/.packages/webview_flutter_wkwebview-3.26.0"
+        },
+        "subpath" : "webview_flutter_wkwebview-3.26.0"
+      }
+    ]
+  },
+  "version" : 6
+}
