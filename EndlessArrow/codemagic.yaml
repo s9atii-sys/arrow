@@ -7,11 +7,12 @@ workflows:
       xcode: latest
 
     scripts:
-      - name: Find Flutter project
+      - name: Install dependencies
         script: |
-          echo "Current directory:"
-          pwd
-          echo "Project files:"
-          ls -la
-          echo "Finding pubspec.yaml:"
-          find . -maxdepth 4 -name pubspec.yaml -print
+          cd EndlessArrow
+          flutter pub get
+
+      - name: Build iOS
+        script: |
+          cd EndlessArrow
+          flutter build ios --release --no-codesign
